@@ -1,0 +1,89 @@
+.root {
+    -fx-background-color: #c9c3b5;
+}
+
+.grid-pane {
+    -fx-background-color: #d8d2c4;
+    -fx-padding: 14;
+    -fx-hgap: 6;
+    -fx-vgap: 6;
+
+    -fx-border-color: #a8a090;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.text-field {
+    -fx-background-color: #000000, 
+        linear-gradient(from 0px 0px to 0px 2px, repeat, rgba(0, 0, 0, 0.4) 50%, transparent 50%);
+    -fx-text-fill: #33ff33;
+
+    -fx-font-size: 24px;
+    -fx-font-family: "Courier New", monospace;
+
+    -fx-border-color: #1f7a1f;
+    -fx-border-width: 2;
+
+    -fx-padding: 10;
+
+    -fx-effect: dropshadow(gaussian, #33ff33, 6, 0.25, 0, 0);
+}
+
+.history-field {
+    -fx-background-color: #000000, 
+        linear-gradient(from 0px 0px to 0px 2px, repeat, rgba(0, 0, 0, 0.4) 50%, transparent 50%);
+    -fx-text-fill: #1a801a;
+    -fx-font-size: 14px;
+    -fx-font-family: "Courier New", monospace;
+    -fx-border-color: #1f7a1f;
+    -fx-border-width: 2 2 0 2;
+    -fx-padding: 5;
+}
+
+.form-control {
+    -fx-border-width: 0 2 2 2;
+}
+
+.button {
+    -fx-background-color: #e5dfd0;
+    -fx-text-fill: #222;
+
+    -fx-font-size: 16px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-weight: bold;
+
+    -fx-border-color: #9a9487;
+    -fx-border-width: 1;
+
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 2, 0.3, 0, 2);
+}
+
+.button:pressed {
+    -fx-background-color: #d2ccbd;
+    -fx-translate-y: 2;
+    -fx-effect: none;
+}
+
+.btn-secondary {
+    -fx-background-color: #f0eadc;
+}
+
+.btn-primary {
+    -fx-background-color: #d6d0c2;
+}
+
+.btn-success {
+    -fx-background-color: #cfc8b8;
+}
+
+.btn-danger {
+    -fx-background-color: #b8b0a0;
+    -fx-text-fill: #000;
+    -fx-font-size: 10px;
+    -fx-padding: 0 5 0 5;
+}
+
