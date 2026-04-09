@@ -1,71 +1,58 @@
 package com.example.demo1;
 
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-
 public class Controller {
-
     private final Model model;
-    private TextField textField;
-    private TextField historyField;
-    private String operator = "";
+    private View view;
     private boolean start = true;
 
     public Controller(Model model) {
         this.model = model;
     }
 
-    public void setTextField(TextField textField) {
-        this.textField = textField;
+    public void setView(View view) {
+        this.view = view;
     }
 
-    public void setHistoryField(TextField historyField) {
-        this.historyField = historyField;
-    }
-
-    public void processNumbers(ActionEvent event) {
+    public void processNumbers(String value) {
         if (start) {
-            textField.setText("");
+            model.setCurrentInput("");
             start = false;
         }
 
-        String value = ((Button) event.getSource()).getText();
-        textField.setText(textField.getText() + value);
+        model.setCurrentInput(model.getCurrentInput() + value);
+        view.updateDisplay(model.getCurrentInput(), model.getHistory());
     }
 
-    public void processOperators(ActionEvent event) {
-        String value = ((Button) event.getSource()).getText();
-
+    public void processOperators(String value) {
         if (!"=".equals(value)) {
-            if (!operator.isEmpty()) {
+            if (!model.getOperator().isEmpty()) {
                 return;
             }
 
-            operator = value;
-            double currentNumber = Double.parseDouble(textField.getText());
+            model.setOperator(value);
+            double currentNumber = Double.parseDouble(model.getCurrentInput());
             model.setResult(currentNumber);
-            historyField.setText(currentNumber + " " + operator);
-            textField.setText("");
+            model.setHistory(currentNumber + " " + model.getOperator());
+            model.setCurrentInput("");
+            view.updateDisplay(model.getCurrentInput(), model.getHistory());
         } else {
-            if (operator.isEmpty()) {
+            if (model.getOperator().isEmpty()) {
                 return;
             }
 
-            double currentNumber = Double.parseDouble(textField.getText());
-            historyField.setText(historyField.getText() + " " + currentNumber + " =");
-            double result = model.calculate(currentNumber, operator);
-            textField.setText(String.valueOf(result));
-            operator = "";
+            double currentNumber = Double.parseDouble(model.getCurrentInput());
+            model.setHistory(model.getHistory() + " " + currentNumber + " =");
+            double result = model.calculate(currentNumber, model.getOperator());
+            model.setCurrentInput(String.valueOf(result));
+            model.setOperator("");
             start = true;
+            view.updateDisplay(model.getCurrentInput(), model.getHistory());
         }
     }
 
-    public void clear(ActionEvent event) {
-        textField.setText("");
-        historyField.setText("");
-        operator = "";
+    public void clear() {
+        model.clear();
         start = true;
-        model.setResult(0);
+        view.updateDisplay("", "");
     }
 }

@@ -1,6 +1,5 @@
 package com.example.demo1;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,38 +11,39 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
-public class View extends Application {
-    @Override
-    public void start(Stage stage) {
+public class View {
+    private TextField historyField;
+    private TextField textField;
+    private Controller controller;
 
-        Model model = new Model();
-        Controller controller = new Controller(model);
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
+    public void start(Stage stage) {
 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(10));
         gridPane.setHgap(5);
         gridPane.setVgap(5);
 
-        TextField historyField = new TextField("");
+        historyField = new TextField("");
         historyField.setAlignment(Pos.CENTER_RIGHT);
         historyField.setPrefHeight(30);
         historyField.setEditable(false);
         historyField.setFocusTraversable(false);
         historyField.getStyleClass().add("history-field");
 
-        TextField textField = new TextField("");
+        textField = new TextField("");
         textField.setAlignment(Pos.CENTER_RIGHT);
         textField.setPrefHeight(60);
         textField.setMaxWidth(Double.MAX_VALUE);
         textField.setEditable(false);
 
-        controller.setTextField(textField);
-        controller.setHistoryField(historyField);
-
         textField.getStyleClass().add("form-control");
 
         Button clearButton = new Button("x");
-        clearButton.setOnAction(controller::clear);
+        clearButton.setOnAction(event -> controller.clear());
 
         clearButton.getStyleClass().addAll("btn", "btn-danger");
 
@@ -72,13 +72,13 @@ public class View extends Application {
 
                 if ("=".equals(text)) {
                     button.getStyleClass().addAll("btn", "btn-success");
-                    button.setOnAction(controller::processOperators);
+                    button.setOnAction(event -> controller.processOperators(text));
                 } else if ("+-*/".contains(text)) {
                     button.getStyleClass().addAll("btn", "btn-primary");
-                    button.setOnAction(controller::processOperators);
+                    button.setOnAction(event -> controller.processOperators(text));
                 } else {
                     button.getStyleClass().addAll("btn", "btn-secondary");
-                    button.setOnAction(controller::processNumbers);
+                    button.setOnAction(event -> controller.processNumbers(text));
                 }
 
                 gridPane.add(button, col, row + 1);
@@ -102,4 +102,8 @@ public class View extends Application {
         stage.show();
     }
 
+    public void updateDisplay(String mainText, String historyText) {
+        textField.setText(mainText);
+        historyField.setText(historyText);
+    }
 }

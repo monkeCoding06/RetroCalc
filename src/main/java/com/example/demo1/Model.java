@@ -3,7 +3,8 @@ package com.example.demo1;
 public class Model {
     private double result = 0;
     private String operator = "";
-    private boolean start = true;
+    private String history = "";
+    private String currentInput = "";
 
     public double calculate(double number, String operator) {
         switch (operator) {
@@ -17,8 +18,11 @@ public class Model {
                 result *= number;
                 break;
             case "/":
-                if (number == 0) return 0;
-                result /= number;
+                if (number != 0) {
+                    result /= number;
+                } else {
+                    result = 0;
+                }
                 break;
             case "=":
                 result = number;
@@ -33,5 +37,36 @@ public class Model {
 
     public double getResult() {
         return result;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getHistory() {
+        return history;
+    }
+
+    public void setHistory(String history) {
+        this.history = history;
+    }
+
+    public String getCurrentInput() {
+        return currentInput;
+    }
+
+    public void setCurrentInput(String currentInput) {
+        this.currentInput = currentInput;
+    }
+
+    public void clear() {
+        result = 0;
+        operator = "";
+        history = "";
+        currentInput = "";
     }
 }
