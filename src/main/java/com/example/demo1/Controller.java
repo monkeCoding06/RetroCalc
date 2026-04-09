@@ -60,6 +60,6 @@ public class Controller {
     public void clear() {
         model.clear();
         start = true;
-        view.updateDisplay("", "");
+        view.updateDisplay("", "", true);
     }
 }

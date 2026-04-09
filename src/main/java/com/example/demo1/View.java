@@ -71,7 +71,7 @@ public class View {
 
         textField.getStyleClass().add("form-control");
 
-        Button clearButton = new Button("x");
+        Button clearButton = new Button("AC");
         clearButton.setOnAction(event -> controller.clear());
 
         clearButton.getStyleClass().addAll("btn", "btn-danger");
@@ -136,8 +136,17 @@ public class View {
     }
 
     public void updateDisplay(String mainText, String historyText) {
-        animateText(textField, mainText, true);
-        animateText(historyField, historyText, false);
+        updateDisplay(mainText, historyText, false);
+    }
+
+    public void updateDisplay(String mainText, String historyText, boolean isClear) {
+        if (isClear) {
+            animateClear(textField);
+            animateClear(historyField);
+        } else {
+            animateText(textField, mainText, true);
+            animateText(historyField, historyText, false);
+        }
 
         if ("DIVISION BY ZERO".equals(mainText)) {
             if (!textField.getStyleClass().contains("text-field-error")) {
@@ -218,6 +227,31 @@ public class View {
             final int index = i;
             KeyFrame keyFrame = new KeyFrame(Duration.millis(i * 20), e -> {
                 field.setText(targetText.substring(0, index));
+            });
+            timeline.getKeyFrames().add(keyFrame);
+        }
+
+        if (isMain) mainTimeline = timeline;
+        else historyTimeline = timeline;
+
+        timeline.play();
+    }
+
+    private void animateClear(TextField field) {
+        boolean isMain = (field == textField);
+        if (isMain) {
+            if (mainTimeline != null) mainTimeline.stop();
+        } else {
+            if (historyTimeline != null) historyTimeline.stop();
+        }
+
+        String currentText = field.getText();
+        Timeline timeline = new Timeline();
+
+        for (int i = 0; i <= currentText.length(); i++) {
+            final int index = currentText.length() - i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(i * 15), e -> {
+                field.setText(currentText.substring(0, index));
             });
             timeline.getKeyFrames().add(keyFrame);
         }
