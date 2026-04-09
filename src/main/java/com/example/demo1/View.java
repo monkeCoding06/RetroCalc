@@ -6,17 +6,21 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.animation.Animation;
@@ -76,34 +80,7 @@ public class View {
         combinedDisplay.setSpacing(0);
         combinedDisplay.getStyleClass().add("crt-screen");
 
-        // Crt style scanlines kinda?
-        Pane scanlinePane = new Pane();
-        scanlinePane.setMouseTransparent(true);
-        scanlinePane.setPrefSize(335, 90);
-
-        Rectangle scanline = new Rectangle(0, 0, 350, 10);
-        scanline.setOpacity(0.1);
-        scanline.setFill(new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
-                new Stop(0, Color.TRANSPARENT),
-                new Stop(0.5, Color.LIME),
-                new Stop(1, Color.TRANSPARENT)));
-
-        scanlinePane.getChildren().add(scanline);
-
-        TranslateTransition transition = new TranslateTransition(Duration.seconds(3), scanline);
-        transition.setFromY(-20);
-        transition.setToY(110);
-        transition.setCycleCount(Animation.INDEFINITE);
-        transition.play();
-
-        StackPane displayStack = new StackPane(combinedDisplay, scanlinePane);
-        displayStack.setClip(new Rectangle(335, 100)); // Clip to display size
-        displayStack.setMaxWidth(335);
-
-        gridPane.add(displayStack, 0, 0, 4, 1);
-        GridPane.setHalignment(displayStack, HPos.CENTER);
-        // Crt style scanlines kinda?
-
+        createScanLines(combinedDisplay, gridPane);
 
         String[][] buttonLabels = {
                 {"7", "8", "9", "/"},
@@ -165,5 +142,61 @@ public class View {
         } else {
             textField.getStyleClass().remove("text-field-error");
         }
+    }
+
+    // this method is just for the scanlines
+    private void createScanLines(VBox combinedDisplay, GridPane gridPane){
+        Pane scanlinePane = new Pane();
+        scanlinePane.setMouseTransparent(true);
+        scanlinePane.setPrefSize(335, 90);
+
+        Rectangle scanline = new Rectangle(0, 0, 350, 10);
+        scanline.setOpacity(0.15);
+        scanline.setFill(new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
+                new Stop(0, Color.TRANSPARENT),
+                new Stop(0.2, Color.web("#33ff33", 0.3)),
+                new Stop(0.5, Color.LIME),
+                new Stop(0.8, Color.web("#33ff33", 0.3)),
+                new Stop(1, Color.TRANSPARENT)));
+
+        Rectangle hazyLayer = new Rectangle(335, 100);
+        hazyLayer.setFill(Color.web("#33ff33", 0.05));
+        hazyLayer.setMouseTransparent(true);
+
+        scanlinePane.getChildren().addAll(scanline, hazyLayer);
+
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(3), scanline);
+        transition.setFromY(-20);
+        transition.setToY(110);
+        transition.setCycleCount(Animation.INDEFINITE);
+        transition.play();
+
+        StackPane displayStack = new StackPane(combinedDisplay, scanlinePane);
+        displayStack.setClip(new Rectangle(335, 100));
+        displayStack.setMaxWidth(335);
+
+        Label logo = new Label("RETRO-CALC");
+        logo.getStyleClass().add("calculator-logo");
+
+        Circle onLed = new Circle(2);
+        onLed.getStyleClass().add("on-led");
+
+        StackPane ledSocket = new StackPane(onLed);
+        ledSocket.getStyleClass().add("led-socket");
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        HBox topBar = new HBox(logo, spacer, ledSocket);
+        topBar.setAlignment(Pos.CENTER_LEFT);
+        topBar.setPadding(new Insets(0, 5, 2, 5));
+        topBar.setMaxWidth(335);
+
+        VBox displayContainer = new VBox(topBar, displayStack);
+        displayContainer.setMaxWidth(335);
+        displayContainer.setAlignment(Pos.CENTER);
+
+        gridPane.add(displayContainer, 0, 0, 4, 1);
+        GridPane.setHalignment(displayContainer, HPos.CENTER);
     }
 }
