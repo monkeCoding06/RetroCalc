@@ -53,6 +53,7 @@ public class View {
 
         VBox combinedDisplay = new VBox(historyPane, textField);
         combinedDisplay.setSpacing(0);
+        combinedDisplay.getStyleClass().add("crt-screen");
 
         gridPane.add(combinedDisplay, 0, 0, 4, 1);
 

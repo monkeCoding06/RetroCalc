@@ -15,8 +15,7 @@
 }
 
 .text-field {
-    -fx-background-color: #000000, 
-        linear-gradient(from 0px 0px to 0px 2px, repeat, rgba(0, 0, 0, 0.4) 50%, transparent 50%);
+    -fx-background-color: transparent;
     -fx-text-fill: #33ff33;
 
     -fx-font-size: 24px;
@@ -27,23 +26,29 @@
 
     -fx-padding: 10;
 
-    -fx-effect: dropshadow(gaussian, #33ff33, 6, 0.25, 0, 0);
+    -fx-effect: dropshadow(gaussian, #33ff33, 10, 0.5, 0, 0);
 }
 
 .text-field-error {
     -fx-text-fill: #ff3333;
-    -fx-effect: dropshadow(gaussian, #ff3333, 6, 0.25, 0, 0);
+    -fx-effect: dropshadow(gaussian, #ff3333, 10, 0.5, 0, 0);
 }
 
 .history-field {
-    -fx-background-color: #000000, 
-        linear-gradient(from 0px 0px to 0px 2px, repeat, rgba(0, 0, 0, 0.4) 50%, transparent 50%);
+    -fx-background-color: transparent;
     -fx-text-fill: #1a801a;
     -fx-font-size: 14px;
     -fx-font-family: "Courier New", monospace;
     -fx-border-color: #1f7a1f;
     -fx-border-width: 2 2 0 2;
     -fx-padding: 5;
+}
+
+.crt-screen {
+    -fx-background-color: 
+        #000000,
+        linear-gradient(from 0px 0px to 0px 3px, repeat, rgba(0, 0, 0, 0.4) 50%, transparent 50%),
+        radial-gradient(center 50% 50%, radius 70%, transparent, rgba(0, 0, 0, 0.6));
 }
 
 .form-control {
