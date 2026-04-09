@@ -127,6 +127,45 @@ public class View {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+
+        showStartupAnimation();
+    }
+
+    private void showStartupAnimation() {
+        Timeline startupTimeline = new Timeline();
+
+        String retroCalc = "RETRO CALC";
+        for (int i = 0; i <= retroCalc.length(); i++) {
+            final int index = i;
+            startupTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(i * 50), e -> {
+                textField.setText(retroCalc.substring(0, index));
+            }));
+        }
+
+        double startBooting = retroCalc.length() * 50 + 200;
+        String booting = "BOOTING";
+
+        for (int i = 0; i <= booting.length(); i++) {
+            final int index = i;
+            startupTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(startBooting + i * 50), e -> {
+                textField.setText(booting.substring(0, index));
+            }));
+        }
+
+        double dotsStart = startBooting + booting.length() * 50 + 100;
+        for (int i = 1; i <= 3; i++) {
+            final int dotCount = i;
+            startupTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(dotsStart + i * 300), e -> {
+                textField.setText(booting + ".".repeat(dotCount));
+            }));
+        }
+
+        startupTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(dotsStart + 1200), e -> {
+            textField.setText("0");
+            controller.clear();
+        }));
+
+        startupTimeline.play();
     }
 
     public void updateDisplay(String mainText, String historyText) {

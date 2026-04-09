@@ -14,7 +14,7 @@ public class Controller {
     }
 
     public void processNumbers(String value) {
-        if (start || model.getCurrentInput().equals("DIVISION BY ZERO")) {
+        if (start || model.getCurrentInput().equals("DIVISION BY ZERO") || model.getCurrentInput().equals("0")) {
             model.setCurrentInput("");
             start = false;
         }
@@ -58,8 +58,11 @@ public class Controller {
     }
 
     public void clear() {
-        model.clear();
+        model.setCurrentInput("0");
+        model.setOperator("");
+        model.setHistory("");
+        model.setResult(0);
         start = true;
-        view.updateDisplay("", "", true);
+        view.updateDisplay("0", "", true);
     }
 }
