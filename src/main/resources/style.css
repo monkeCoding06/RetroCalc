@@ -30,6 +30,11 @@
     -fx-effect: dropshadow(gaussian, #33ff33, 6, 0.25, 0, 0);
 }
 
+.text-field-error {
+    -fx-text-fill: #ff3333;
+    -fx-effect: dropshadow(gaussian, #ff3333, 6, 0.25, 0, 0);
+}
+
 .history-field {
     -fx-background-color: #000000, 
         linear-gradient(from 0px 0px to 0px 2px, repeat, rgba(0, 0, 0, 0.4) 50%, transparent 50%);

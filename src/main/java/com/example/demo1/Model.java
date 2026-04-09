@@ -21,7 +21,7 @@ public class Model {
                 if (number != 0) {
                     result /= number;
                 } else {
-                    result = 0;
+                    result = Double.NaN;
                 }
                 break;
             case "=":

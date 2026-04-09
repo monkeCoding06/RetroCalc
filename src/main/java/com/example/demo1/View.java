@@ -105,5 +105,13 @@ public class View {
     public void updateDisplay(String mainText, String historyText) {
         textField.setText(mainText);
         historyField.setText(historyText);
+
+        if ("SYNTAX ERROR".equals(mainText)) {
+            if (!textField.getStyleClass().contains("text-field-error")) {
+                textField.getStyleClass().add("text-field-error");
+            }
+        } else {
+            textField.getStyleClass().remove("text-field-error");
+        }
     }
 }
