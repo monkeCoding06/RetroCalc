@@ -98,10 +98,10 @@
 .btn-danger {
     -fx-background-color: #b8b0a0;
     -fx-text-fill: #ff3333;
-    -fx-font-size: 11px;
+    -fx-font-size: 14px;
     -fx-font-family: "Courier New", monospace;
     -fx-font-weight: bold;
-    -fx-padding: 2 5 2 5;
+    -fx-padding: 5 10 5 10;
     -fx-border-color: #ff3333;
     -fx-border-width: 1;
     -fx-effect: dropshadow(gaussian, #ff3333, 5, 0.3, 0, 0);

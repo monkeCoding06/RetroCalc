@@ -44,6 +44,7 @@ public class View {
     public void start(Stage stage) {
 
         GridPane gridPane = new GridPane();
+        gridPane.getStyleClass().add("grid-pane");
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setPadding(new Insets(10));
         gridPane.setHgap(5);
@@ -51,7 +52,6 @@ public class View {
 
         for (int i = 0; i < 4; i++) {
             ColumnConstraints column = new ColumnConstraints();
-            column.setPercentWidth(25);
             column.setHalignment(HPos.CENTER);
             gridPane.getColumnConstraints().add(column);
         }
@@ -62,6 +62,7 @@ public class View {
         historyField.setEditable(false);
         historyField.setFocusTraversable(false);
         historyField.getStyleClass().add("history-field");
+        historyField.setMaxWidth(Double.MAX_VALUE);
 
         textField = new TextField("");
         textField.setAlignment(Pos.CENTER_RIGHT);
@@ -71,14 +72,7 @@ public class View {
 
         textField.getStyleClass().add("form-control");
 
-        Button clearButton = new Button("AC");
-        clearButton.setOnAction(event -> controller.clear());
-
-        clearButton.getStyleClass().addAll("btn", "btn-danger");
-
-        StackPane historyPane = new StackPane(historyField, clearButton);
-        StackPane.setAlignment(clearButton, Pos.CENTER_LEFT);
-        StackPane.setMargin(clearButton, new Insets(0, 0, 0, 5));
+        StackPane historyPane = new StackPane(historyField);
 
         VBox combinedDisplay = new VBox(historyPane, textField);
         combinedDisplay.setSpacing(0);
@@ -161,7 +155,7 @@ public class View {
     private void createScanLines(VBox combinedDisplay, GridPane gridPane){
         Pane scanlinePane = new Pane();
         scanlinePane.setMouseTransparent(true);
-        scanlinePane.setPrefSize(335, 90);
+        scanlinePane.setPrefSize(338, 90);
 
         Rectangle scanline = new Rectangle(0, 0, 350, 10);
         scanline.setOpacity(0.15);
@@ -172,7 +166,7 @@ public class View {
                 new Stop(0.8, Color.web("#33ff33", 0.3)),
                 new Stop(1, Color.TRANSPARENT)));
 
-        Rectangle hazyLayer = new Rectangle(335, 100);
+        Rectangle hazyLayer = new Rectangle(338, 100);
         hazyLayer.setFill(Color.web("#33ff33", 0.05));
         hazyLayer.setMouseTransparent(true);
 
@@ -185,8 +179,9 @@ public class View {
         transition.play();
 
         StackPane displayStack = new StackPane(combinedDisplay, scanlinePane);
-        displayStack.setClip(new Rectangle(335, 100));
-        displayStack.setMaxWidth(335);
+        displayStack.setClip(new Rectangle(338, 100));
+        displayStack.setPrefWidth(338);
+        displayStack.setMaxWidth(338);
 
         Label logo = new Label("RETRO-CALC");
         logo.getStyleClass().add("calculator-logo");
@@ -203,10 +198,20 @@ public class View {
         HBox topBar = new HBox(logo, spacer, ledSocket);
         topBar.setAlignment(Pos.CENTER_LEFT);
         topBar.setPadding(new Insets(0, 5, 2, 5));
-        topBar.setMaxWidth(335);
+        topBar.setPrefWidth(338);
+        topBar.setMaxWidth(338);
 
-        VBox displayContainer = new VBox(topBar, displayStack);
-        displayContainer.setMaxWidth(335);
+        Button clearButton = new Button("AC");
+        clearButton.setOnAction(event -> controller.clear());
+        clearButton.getStyleClass().addAll("btn", "btn-main");
+        clearButton.setPrefWidth(338);
+        clearButton.setMaxWidth(338);
+
+        VBox displayContainer = new VBox(topBar, displayStack, clearButton);
+        displayContainer.setSpacing(5);
+        VBox.setMargin(clearButton, new Insets(5, 0, 0, 0));
+        displayContainer.setPrefWidth(338);
+        displayContainer.setMaxWidth(338);
         displayContainer.setAlignment(Pos.CENTER);
 
         gridPane.add(displayContainer, 0, 0, 4, 1);
