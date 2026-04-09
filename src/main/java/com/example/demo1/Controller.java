@@ -14,7 +14,7 @@ public class Controller {
     }
 
     public void processNumbers(String value) {
-        if (start || model.getCurrentInput().equals("SYNTAX ERROR")) {
+        if (start || model.getCurrentInput().equals("DIVISION BY ZERO")) {
             model.setCurrentInput("");
             start = false;
         }
@@ -24,7 +24,7 @@ public class Controller {
     }
 
     public void processOperators(String value) {
-        if (model.getCurrentInput().equals("SYNTAX ERROR")) {
+        if (model.getCurrentInput().equals("DIVISION BY ZERO")) {
             return;
         }
         if (!"=".equals(value)) {
@@ -47,7 +47,7 @@ public class Controller {
             model.setHistory(model.getHistory() + " " + currentNumber + " =");
             double result = model.calculate(currentNumber, model.getOperator());
             if (Double.isNaN(result)) {
-                model.setCurrentInput("SYNTAX ERROR");
+                model.setCurrentInput("DIVISION BY ZERO");
             } else {
                 model.setCurrentInput(String.valueOf(result));
             }

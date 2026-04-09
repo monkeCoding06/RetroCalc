@@ -21,8 +21,7 @@
     -fx-font-size: 24px;
     -fx-font-family: "Courier New", monospace;
 
-    -fx-border-color: #1f7a1f;
-    -fx-border-width: 2;
+    -fx-border-width: 0;
 
     -fx-padding: 10;
 
@@ -39,8 +38,7 @@
     -fx-text-fill: #1a801a;
     -fx-font-size: 14px;
     -fx-font-family: "Courier New", monospace;
-    -fx-border-color: #1f7a1f;
-    -fx-border-width: 2 2 0 2;
+    -fx-border-width: 0;
     -fx-padding: 5;
 }
 
@@ -49,10 +47,15 @@
         #000000,
         linear-gradient(from 0px 0px to 0px 3px, repeat, rgba(0, 0, 0, 0.4) 50%, transparent 50%),
         radial-gradient(center 50% 50%, radius 70%, transparent, rgba(0, 0, 0, 0.6));
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-border-color: #1f7a1f;
+    -fx-border-width: 2;
+    -fx-overflow: hidden;
 }
 
 .form-control {
-    -fx-border-width: 0 2 2 2;
+    -fx-border-width: 0;
 }
 
 .button {

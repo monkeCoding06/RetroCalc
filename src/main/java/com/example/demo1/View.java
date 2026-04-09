@@ -6,8 +6,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
+import javafx.animation.Animation;
+import javafx.animation.TranslateTransition;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
@@ -55,7 +64,32 @@ public class View {
         combinedDisplay.setSpacing(0);
         combinedDisplay.getStyleClass().add("crt-screen");
 
-        gridPane.add(combinedDisplay, 0, 0, 4, 1);
+        // Crt style scanlines kinda?
+        Pane scanlinePane = new Pane();
+        scanlinePane.setMouseTransparent(true);
+        scanlinePane.setPrefSize(350, 90);
+
+        Rectangle scanline = new Rectangle(0, 0, 400, 10);
+        scanline.setOpacity(0.1);
+        scanline.setFill(new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
+                new Stop(0, Color.TRANSPARENT),
+                new Stop(0.5, Color.LIME),
+                new Stop(1, Color.TRANSPARENT)));
+
+        scanlinePane.getChildren().add(scanline);
+
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(3), scanline);
+        transition.setFromY(-20);
+        transition.setToY(110);
+        transition.setCycleCount(Animation.INDEFINITE);
+        transition.play();
+
+        StackPane displayStack = new StackPane(combinedDisplay, scanlinePane);
+        displayStack.setClip(new Rectangle(350, 100)); // Clip to display size
+
+        gridPane.add(displayStack, 0, 0, 4, 1);
+        // Crt style scanlines kinda?
+
 
         String[][] buttonLabels = {
                 {"7", "8", "9", "/"},
@@ -107,7 +141,7 @@ public class View {
         textField.setText(mainText);
         historyField.setText(historyText);
 
-        if ("SYNTAX ERROR".equals(mainText)) {
+        if ("DIVISION BY ZERO".equals(mainText)) {
             if (!textField.getStyleClass().contains("text-field-error")) {
                 textField.getStyleClass().add("text-field-error");
             }
