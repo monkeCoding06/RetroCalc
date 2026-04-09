@@ -24,6 +24,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
@@ -32,6 +34,8 @@ public class View {
     private TextField historyField;
     private TextField textField;
     private Controller controller;
+    private Timeline mainTimeline;
+    private Timeline historyTimeline;
 
     public void setController(Controller controller) {
         this.controller = controller;
@@ -132,8 +136,8 @@ public class View {
     }
 
     public void updateDisplay(String mainText, String historyText) {
-        textField.setText(mainText);
-        historyField.setText(historyText);
+        animateText(textField, mainText, true);
+        animateText(historyField, historyText, false);
 
         if ("DIVISION BY ZERO".equals(mainText)) {
             if (!textField.getStyleClass().contains("text-field-error")) {
@@ -198,5 +202,29 @@ public class View {
 
         gridPane.add(displayContainer, 0, 0, 4, 1);
         GridPane.setHalignment(displayContainer, HPos.CENTER);
+    }
+
+    private void animateText(TextField field, String targetText, boolean isMain) {
+        if (field.getText().equals(targetText)) return;
+
+        if (isMain) {
+            if (mainTimeline != null) mainTimeline.stop();
+        } else {
+            if (historyTimeline != null) historyTimeline.stop();
+        }
+
+        Timeline timeline = new Timeline();
+        for (int i = 0; i <= targetText.length(); i++) {
+            final int index = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(i * 20), e -> {
+                field.setText(targetText.substring(0, index));
+            });
+            timeline.getKeyFrames().add(keyFrame);
+        }
+
+        if (isMain) mainTimeline = timeline;
+        else historyTimeline = timeline;
+
+        timeline.play();
     }
 }
