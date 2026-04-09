@@ -123,7 +123,7 @@ public class View {
         scene.getStylesheets().add(
                 getClass().getResource("/style.css").toExternalForm()
         );
-        stage.setTitle("Calc");
+        stage.setTitle("RETRO CALC");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
