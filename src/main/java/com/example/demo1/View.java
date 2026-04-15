@@ -27,6 +27,8 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
@@ -126,6 +128,28 @@ public class View {
         stage.setTitle("RETRO CALC");
         stage.setScene(scene);
         stage.setResizable(false);
+
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            KeyCode code = event.getCode();
+            if (code.isDigitKey()) {
+                controller.processNumbers(event.getText());
+            } else if (code == KeyCode.DECIMAL || code == KeyCode.PERIOD) {
+                controller.processNumbers(".");
+            } else if (code == KeyCode.ADD || (code == KeyCode.EQUALS && event.isShiftDown())) {
+                controller.processOperators("+");
+            } else if (code == KeyCode.SUBTRACT || code == KeyCode.MINUS) {
+                controller.processOperators("-");
+            } else if (code == KeyCode.MULTIPLY || (code == KeyCode.DIGIT8 && event.isShiftDown())) {
+                controller.processOperators("*");
+            } else if (code == KeyCode.DIVIDE || code == KeyCode.SLASH) {
+                controller.processOperators("/");
+            } else if (code == KeyCode.ENTER || code == KeyCode.EQUALS) {
+                controller.processOperators("=");
+            } else if (code == KeyCode.BACK_SPACE || code == KeyCode.DELETE || code == KeyCode.ESCAPE) {
+                controller.clear();
+            }
+        });
+
         stage.show();
 
         showStartupAnimation();
